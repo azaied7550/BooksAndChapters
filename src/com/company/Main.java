@@ -12,6 +12,8 @@ public class Main {
         Chapters newChapter;
         Pages newPage;
         String answer;
+        String userInputChapter;
+        String userInputPage;
 
 
         System.out.println("Enter book title: ");
@@ -39,24 +41,61 @@ public class Main {
         } while (answer.equalsIgnoreCase("y"));
 
 
+        //Displaying list before adding new pages to a chapter
+        displayBooks(booksArrayList);
+
+
+        //Adding a page to an existing chapter
+        do {
+            System.out.println("Do you want to add a page to an existing chapter? (Y/N)");
+            answer = keyboard.nextLine();
+            if (answer.equalsIgnoreCase("y")) {
+                System.out.println("Enter chapter name: ");
+                userInputChapter = keyboard.nextLine();
+
+                System.out.println("Enter page name to add: ");
+                userInputPage = keyboard.nextLine();
+
+
+                for (Books eachBook : booksArrayList) {
+
+                    for (Chapters eachChapter : eachBook.getChaptersArrayList()) {
+                        if (eachChapter.getChapterTitle().equalsIgnoreCase(userInputChapter)) {
+                            newPage = new Pages();
+                            newPage.setPageTitle(userInputPage);
+                            newChapter.getPagesArrayList().add(newPage);
+                        }
+                    }
+                }
+
+            }
+        }while (answer.equalsIgnoreCase("y")) ;
+
+        //Displaying book list after addition
+        System.out.println("List of books after page addition");
+        displayBooks(booksArrayList);
+
+    }
+
+
+    //Method to display book list
+    private static void displayBooks(ArrayList<Books> booksArrayList){
         for (Books eachBook : booksArrayList) {
             System.out.println("Book Title: " + eachBook.getBookTitle());
             System.out.println();
             System.out.println("Chapters: ");
-            int count=1;
+            int count = 1;
             for (Chapters eachChapter : eachBook.getChaptersArrayList()) {
-                System.out.println("Chapter "+count+" : " + eachChapter.getChapterTitle());
+                System.out.println("Chapter " + count + " : " + eachChapter.getChapterTitle());
                 count++;
                 System.out.println("Pages: ");
-                int count1=1;
+                int count1 = 1;
                 for (Pages eachPage : eachChapter.getPagesArrayList()) {
-                    System.out.println("Page "+count1+" :" + eachPage.getPageTitle());
+                    System.out.println("Page " + count1 + " :" + eachPage.getPageTitle());
                     count1++;
                 }
                 System.out.println();
             }
         }
-
     }
 }
-
